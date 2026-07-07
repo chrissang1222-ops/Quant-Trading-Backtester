@@ -40,3 +40,16 @@ Performance Analysis
 - Git/GitHub
 
 ## Project Structure
+
+
+## Future Improvements
+
+- Add Sharpe ratio calculations
+- Add maximum drawdown analysis
+- Implement Monte Carlo simulations
+- Add machine learning-based trading signals
+- Develop portfolio optimization models
+
+## Author
+
+Chris Sang
