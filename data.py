@@ -1,7 +1,6 @@
 import yfinance as yf
 import pandas as pd
 
-
 def download_data(ticker, start, end):
 
     data = yf.download(
@@ -9,6 +8,10 @@ def download_data(ticker, start, end):
         start=start,
         end=end
     )
+
+    # Remove MultiIndex columns if present
+    if isinstance(data.columns, pd.MultiIndex):
+        data.columns = data.columns.droplevel(1)
 
     return data
 
@@ -20,8 +23,6 @@ if __name__ == "__main__":
         "2015-01-01",
         "2025-01-01"
     )
-
-    stock.columns = stock.columns.droplevel(1)
 
     print(stock.head())
 
