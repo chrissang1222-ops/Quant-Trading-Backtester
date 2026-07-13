@@ -1,12 +1,32 @@
 import numpy as np
 
-def gbm(S0=100, mu=0.05, sigma=0.2, T=1, steps=252):
+
+def gbm(
+    S0=100,
+    mu=0.05,
+    sigma=0.2,
+    T=1,
+    steps=252,
+    simulations=1000
+):
+
     dt = T / steps
-    prices = [S0]
 
-    for _ in range(steps):
-        shock = np.random.normal(0, 1)
-        S_next = prices[-1] * np.exp((mu - 0.5*sigma**2)*dt + sigma*np.sqrt(dt)*shock)
-        prices.append(S_next)
+    paths = np.zeros((simulations, steps + 1))
 
-    return prices
+    paths[:, 0] = S0
+
+    for i in range(simulations):
+        for t in range(1, steps + 1):
+
+            shock = np.random.normal(0, 1)
+
+            paths[i, t] = (
+                paths[i, t-1]
+                * np.exp(
+                    (mu - 0.5 * sigma**2) * dt
+                    + sigma * np.sqrt(dt) * shock
+                )
+            )
+
+    return paths
