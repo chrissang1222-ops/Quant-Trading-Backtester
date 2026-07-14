@@ -11,45 +11,85 @@ The goal of this project is to build a systematic trading research pipeline that
 ## System Architecture
 
 Historical Market Data
-        ↓
+↓
 Data Processing
-        ↓
+↓
 Technical Indicators
-        ↓
+↓
 Trading Strategy
-        ↓
+↓
 Portfolio Simulation
-        ↓
+↓
 Performance Analysis
 
 ## Features
 
-- Historical equity data processing
-- Algorithmic trading signal generation
-- Portfolio tracking and simulation
-- Return calculations
-- Performance statistics
-- Strategy backtesting framework
+* Historical equity data processing
+* Algorithmic trading signal generation
+* Portfolio tracking and simulation
+* Return calculations
+* Performance statistics
+* Strategy backtesting framework
 
 ## Technologies Used
 
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- Git/GitHub
+* Python
+* Pandas
+* NumPy
+* Matplotlib
+* Git/GitHub
 
 ## Project Structure
 
 
+
 ## Future Improvements
 
-- Add Sharpe ratio calculations
-- Add maximum drawdown analysis
-- Implement Monte Carlo simulations
-- Add machine learning-based trading signals
-- Develop portfolio optimization models
+* Add Sharpe ratio calculations
+* Add maximum drawdown analysis
+* Implement Monte Carlo simulations
+* Add machine learning-based trading signals
+* Develop portfolio optimization models
+
+
+
+\# Visual Results
+
+
+
+\## Portfolio Performance
+
+
+
+!\[Equity Curve](images/equity\_curve.png)
+
+
+
+\## Benchmark Comparison
+
+
+
+!\[Benchmark](images/benchmark\_comparison.png)
+
+
+
+\## Monte Carlo Simulation
+
+
+
+!\[Monte Carlo](images/monte\_carlo\_simulation.png)
+
+
+
+\## Trading Signals
+
+
+
+!\[Signals](images/strategy\_signals.png)
+
+## 
 
 ## Author
 
 Chris Sang
+

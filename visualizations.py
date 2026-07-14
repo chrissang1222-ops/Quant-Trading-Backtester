@@ -130,36 +130,34 @@ def strategy_chart(signals):
     plt.close()
 
 
-def benchmark_chart(portfolio, prices):
+def benchmark_chart(comparison):
 
     plt.figure(figsize=(12,6))
 
-    strategy = portfolio["Total"]
-
-    buy_hold = (
-        prices / prices.iloc[0]
-    ) * portfolio["Total"].iloc[0]
-
     plt.plot(
-        strategy,
+        comparison["Strategy"],
         label="Moving Average Strategy"
     )
 
     plt.plot(
-        buy_hold,
+        comparison["Buy & Hold"],
         label="Buy & Hold"
     )
 
-    plt.title("Strategy vs Buy & Hold")
+    plt.title(
+        "Strategy Performance vs Buy & Hold Benchmark"
+    )
+
     plt.xlabel("Date")
-    plt.ylabel("Portfolio Value ($)")
+    plt.ylabel("Growth of $1")
 
     plt.legend()
     plt.grid(True)
 
     plt.savefig(
         "benchmark_comparison.png",
-        dpi=300
+        dpi=300,
+        bbox_inches="tight"
     )
 
     plt.close()

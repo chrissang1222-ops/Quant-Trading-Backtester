@@ -1,4 +1,7 @@
-from portfolio import backtest
+from portfolio import (
+    backtest,
+    compare_to_buy_hold
+)
 from strat import moving_average_strategy
 from data import download_data
 from returns import simple_returns
@@ -7,6 +10,7 @@ from simulation import gbm
 from trade_log import generate_trade_log
 from benchmark import benchmark_statistics
 from optimization import optimize_strategy
+from results_table import create_results_table
 
 from performance import (
     total_return,
@@ -61,13 +65,24 @@ rets = simple_returns(prices)
 # STEP 3: Compute statistics
 print(f"Annualized Sharpe Ratio: {sharpe_ratio(rets):.2f}")
 print(f"Annualized Volatility: {volatility(rets):.2%}")
-signals = moving_average_strategy(prices)
+signals = moving_average_strategy(
+    prices,
+    short_window=100,
+    long_window=300
+)
 portfolio = backtest(signals)
 trades = generate_trade_log(signals)
 
 print("\nTrade Log")
 print(trades)
+
 stats = trade_statistics(trades)
+
+comparison = compare_to_buy_hold(
+    portfolio,
+    prices
+)
+
 print_trade_statistics(stats)
 
 print("\nTrade Statistics")
@@ -202,7 +217,18 @@ print(
     optimization_results.head(10)
 )
 
+print("\nStrategy vs Buy & Hold")
 
+strategy_return = (
+    comparison["Strategy"].iloc[-1] - 1
+) * 100
+
+buyhold_return = (
+    comparison["Buy & Hold"].iloc[-1] - 1
+) * 100
+
+print(f"Strategy Return: {strategy_return:.2f}%")
+print(f"Buy & Hold Return: {buyhold_return:.2f}%")
 
 # STEP 4: Monte Carlo simulation
 simulations = gbm()
@@ -219,4 +245,37 @@ equity_curve_chart(portfolio)
 
 strategy_chart(signals)
 
-benchmark_chart(portfolio, prices)
+benchmark_chart(comparison)
+
+print("\nFinal Research Results")
+
+results = create_results_table(
+
+    total_return(portfolio),
+
+    sharpe_ratio(strategy_returns),
+
+    maximum_drawdown(portfolio),
+
+    aapl_benchmark["Total Return"],
+
+    aapl_benchmark["Sharpe Ratio"],
+
+    aapl_benchmark["Maximum Drawdown"],
+
+    spy_benchmark["Total Return"],
+
+    spy_benchmark["Sharpe Ratio"],
+
+    spy_benchmark["Maximum Drawdown"]
+
+)
+
+
+print(results)
+
+
+results.to_csv(
+    "research_results.csv",
+    index=False
+)

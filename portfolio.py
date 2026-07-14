@@ -96,3 +96,22 @@ def backtest(
 
 
     return portfolio
+
+
+
+def compare_to_buy_hold(portfolio, prices):
+
+    results = pd.DataFrame(index=prices.index)
+
+    results["Market Return"] = prices.pct_change()
+
+    results["Buy & Hold"] = (
+        1 + results["Market Return"]
+    ).cumprod()
+
+    results["Strategy"] = (
+        portfolio["Total"] /
+        portfolio["Total"].iloc[0]
+    )
+
+    return results
