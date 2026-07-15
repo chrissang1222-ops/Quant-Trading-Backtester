@@ -2,6 +2,7 @@ from portfolio import (
     backtest,
     compare_to_buy_hold
 )
+
 from strat import moving_average_strategy
 from data import download_data
 from returns import simple_returns
@@ -11,6 +12,7 @@ from trade_log import generate_trade_log
 from benchmark import benchmark_statistics
 from optimization import optimize_strategy
 from results_table import create_results_table
+from visualizations import equity_comparison_chart
 
 from performance import (
     total_return,
@@ -28,9 +30,9 @@ from visualizations import (
     monte_carlo_chart,
     equity_curve_chart,
     strategy_chart,
-    benchmark_chart
+    benchmark_chart,
+    full_benchmark_chart
 )
-
 from risk_metrics import (
     value_at_risk,
     conditional_var,
@@ -49,7 +51,7 @@ prices = download_data(
 )
 
 # Use the closing prices
-prices = prices["Close"]
+prices = prices["Close"].squeeze()
 
 spy_prices = download_data(
     ticker="SPY",
@@ -57,7 +59,7 @@ spy_prices = download_data(
     end="2025-01-01"
 )
 
-spy_prices = spy_prices["Close"]
+spy_prices = spy_prices["Close"].squeeze()
 
 # STEP 2: Compute returns
 rets = simple_returns(prices)
@@ -246,6 +248,10 @@ equity_curve_chart(portfolio)
 strategy_chart(signals)
 
 benchmark_chart(comparison)
+
+equity_comparison_chart(comparison)
+
+full_benchmark_chart(comparison, spy_prices)
 
 print("\nFinal Research Results")
 

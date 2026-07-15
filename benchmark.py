@@ -68,3 +68,11 @@ def benchmark_statistics(prices):
         "Sharpe Ratio": benchmark_sharpe(prices),
         "Maximum Drawdown": benchmark_max_drawdown(prices)
     }
+
+
+import pandas as pd
+
+
+def benchmark_returns(prices):
+    returns = prices.pct_change().dropna()
+    return returns

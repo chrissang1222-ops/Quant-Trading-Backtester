@@ -29,3 +29,20 @@ if __name__ == "__main__":
     stock.to_csv("AAPL_data.csv")
 
     print("Data saved successfully")
+
+
+
+import yfinance as yf
+import pandas as pd
+
+
+def download_data(ticker, start, end):
+    data = yf.download(ticker, start=start, end=end)
+    data.to_csv(f"{ticker}_data.csv")
+    return data
+
+
+def download_benchmark(start, end):
+    spy = yf.download("SPY", start=start, end=end)
+    spy.to_csv("SPY_data.csv")
+    return spy
