@@ -13,6 +13,7 @@ from benchmark import benchmark_statistics
 from optimization import optimize_strategy
 from results_table import create_results_table
 from visualizations import equity_comparison_chart
+from walk_forward import walk_forward_analysis
 
 from performance import (
     total_return,
@@ -219,6 +220,14 @@ print(
     optimization_results.head(10)
 )
 
+print("\nWalk Forward Analysis")
+
+walk_forward_results = walk_forward_analysis(
+    prices
+)
+
+print(walk_forward_results)
+
 print("\nStrategy vs Buy & Hold")
 
 strategy_return = (
@@ -283,5 +292,11 @@ print(results)
 
 results.to_csv(
     "research_results.csv",
+    index=False
+)
+
+
+walk_forward_results.to_csv(
+    "walk_forward_results.csv",
     index=False
 )
