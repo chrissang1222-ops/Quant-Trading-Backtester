@@ -7,16 +7,6 @@ def backtest(
     commission=1,
     slippage=0.0005
 ):
-    """
-    Executes a moving average crossover backtest.
-
-    signals must contain:
-    - Price
-    - Position
-        1  = Buy
-       -1  = Sell
-        0  = Hold
-    """
 
     portfolio = pd.DataFrame(index=signals.index)
 
@@ -33,9 +23,6 @@ def backtest(
         signal = row["Position"]
 
 
-        # ======================
-        # BUY
-        # ======================
         if signal == 1 and position == 0:
 
             execution_price = price * (1 + slippage)
@@ -52,10 +39,6 @@ def backtest(
                 position = shares
 
 
-
-        # ======================
-        # SELL
-        # ======================
         elif signal == -1 and position > 0:
 
             execution_price = price * (1 - slippage)
@@ -69,24 +52,17 @@ def backtest(
             position = 0
 
 
-
-        # Track portfolio
         holdings.append(position)
         cash_history.append(cash)
 
 
-
-    # Store results
     portfolio["Holdings"] = holdings
 
     portfolio["Stock Value"] = (
-        portfolio["Holdings"]
-        *
-        signals["Price"]
+        portfolio["Holdings"] * signals["Price"]
     )
 
     portfolio["Cash"] = cash_history
-
 
     portfolio["Total"] = (
         portfolio["Cash"]
@@ -110,7 +86,8 @@ def compare_to_buy_hold(portfolio, prices):
     ).cumprod()
 
     results["Strategy"] = (
-        portfolio["Total"] /
+        portfolio["Total"]
+        /
         portfolio["Total"].iloc[0]
     )
 
